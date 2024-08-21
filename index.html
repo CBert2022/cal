@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalender-Download</title>
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function downloadICS() {
+            const start = '20240921T110000'; // Startzeit: 21. September 2024, 11:00 Uhr
+            const end = '20240921T200000';   // Endzeit: 21. September 2024, 20:00 Uhr
+            const summary = 'Caro\'s Geburtstagsbrunch';
+            const description = 'Ich möchte gern mit euch brunchen und meinen Geburtstag feiern, ob bei mir (Wühlischstraße 49) oder im Park, entscheidet das Wetter. Ich freu mich auf euch und wen immer ihr mitbringen wollt. Es gibt lecker Snacks & Sekt, vielleicht Werwolf oder auch nicht.\nUnd wenn Sebastian gut drauf ist, vielleicht auch wieder einen Zaubertrick?';
+            const location = 'Wühlischstraße 49, 10245 Berlin';
+            const uid = 'uid' + Date.now() + '@yourdomain.com';
+
+            let icsFile = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Your Organization//NONSGML v1.0//EN\nBEGIN:VEVENT\nUID:${uid}\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:${start}\nDTEND:${end}\nSUMMARY:${summary}\nDESCRIPTION:${description}\nLOCATION:${location}\nEND:VEVENT\nEND:VCALENDAR`;
+
+            let blob = new Blob([icsFile], { type: 'text/calendar' });
+            let link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'caros_geburtstagsbrunch.ics';
+            link.click();
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Kalender-Download</h1>
+    <button class="btn" onclick="downloadICS()">Kalender Ereignis herunterladen 🤓</button>
+</body>
+
+</html>
