@@ -25,7 +25,7 @@
     <script>
         function downloadICS() {
             const start = '20240921T110000'; // Startzeit: 21. September 2024, 11:00 Uhr
-            const end = '20240921T200000';   // Endzeit: 21. September 2024, 20:00  Uhr
+            const end = '20240921T200000';   // Endzeit: 21. September 2024, 20:00 Uhr
             const summary = 'Caro\'s Geburtstagsbrunch';
             const description = 'Ich möchte gern mit euch brunchen und meinen Geburtstag feiern, ob bei mir (Wühlischstraße 49) oder im Park, entscheidet das Wetter. Ich freu mich auf euch und wen immer ihr mitbringen wollt. Es gibt lecker Snacks & Sekt, vielleicht Werwolf oder auch nicht.\nUnd wenn Sebastian gut drauf ist, vielleicht auch wieder einen Zaubertrick?';
             const location = 'Wühlischstraße 49, 10245 Berlin';
@@ -33,9 +33,12 @@
 
             let icsFile = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Your Organization//NONSGML v1.0//EN\nBEGIN:VEVENT\nUID:${uid}\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:${start}\nDTEND:${end}\nSUMMARY:${summary}\nDESCRIPTION:${description}\nLOCATION:${location}\nEND:VEVENT\nEND:VCALENDAR`;
 
-            let blob = new Blob([icsFile], { type: 'text/calendar' });
+            // Convert to Base64
+            let base64String = btoa(icsFile);
+            let dataUri = 'data:text/calendar;base64,' + base64String;
+
             let link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+            link.href = dataUri;
             link.download = 'caros_geburtstagsbrunch.ics';
             link.click();
         }
